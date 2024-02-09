@@ -1,14 +1,11 @@
 import 'package:farmacofy/inicioSesion/pantallaLogin.dart';
 import 'package:farmacofy/inicioSesion/pantallaRegistroLogin.dart';
-import 'package:farmacofy/models/consulta_medica.dart';
 import 'package:farmacofy/modo/modo_trabajo.dart';
 import 'package:farmacofy/pages/page_configuracion.dart';
-import 'package:farmacofy/pages/page_consulta_medica.dart';
 import 'package:farmacofy/pages/page_listado_consultas.dart';
 import 'package:farmacofy/pages/page_listado_medicamentos.dart';
 import 'package:farmacofy/pages/page_listado_tratamientos.dart';
 import 'package:farmacofy/pages/page_listado_usuarios.dart';
-import 'package:farmacofy/pages/page_tratamiento.dart';
 import 'package:farmacofy/pantallaInicial.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -82,7 +79,6 @@ class _MenuDrawerState extends State<MenuDrawer> {
                 builder: (context) => const PaginaConfiguracion(),
               ),
             );
-            break;
             break;
           case 7:
             Navigator.pushReplacement(
