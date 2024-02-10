@@ -3,10 +3,13 @@ import 'dart:io';
 
 import 'package:farmacofy/BBDD/bbdd.dart';
 import 'package:farmacofy/BBDD/bbdd_medicamento_old.dart';
+import 'package:farmacofy/inicioSesion/pantallaLogin.dart';
 import 'package:farmacofy/models/consulta_medica.dart';
 import 'package:farmacofy/pages/page_listado_consultas.dart';
+import 'package:farmacofy/pages/page_listado_usuarios.dart';
 import 'package:farmacofy/pantallaInicial.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class PaginaConsultaMedica extends StatefulWidget {
   const PaginaConsultaMedica({super.key});
@@ -328,6 +331,22 @@ class _PaginaConsultaMedicaState extends State<PaginaConsultaMedica> {
                         child: ElevatedButton.icon(
 
                           onPressed: () {
+
+                            final esSupervisor = context.read<AdminProvider>().esAdmin;
+                            late int idUsuario; 
+
+                            if(esSupervisor){
+
+                              // Almacenamos el id del usuario seleccionado para añadir la consulta médica al usuario correcto
+                               idUsuario = context.read<IdUsuarioSeleccionado>().idUsuario;
+                               consultaMedica.idUsuario = idUsuario;
+                            } else {
+                              // Almacenamos el id del usuario logueado para añadir la consulta médica al usuario correcto
+                              idUsuario = context.read<IdSupervisor>().idUsuario;
+                              consultaMedica.idUsuario = idUsuario;
+                            }
+
+
                             //Validación del formulario
                             if (_formKey.currentState!.validate()) {
                               _formKey.currentState!.save(); //Guarda los datos del formulario

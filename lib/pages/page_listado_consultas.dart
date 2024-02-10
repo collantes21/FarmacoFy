@@ -1,9 +1,12 @@
 import 'package:farmacofy/BBDD/bbdd.dart';
 import 'package:farmacofy/BBDD/bbdd_medicamento_old.dart';
+import 'package:farmacofy/inicioSesion/pantallaLogin.dart';
 import 'package:farmacofy/pages/page_consulta_medica.dart';
+import 'package:farmacofy/pages/page_listado_usuarios.dart';
 import 'package:farmacofy/presentacion/widgets/menu_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 
 class ListadoConsultasMedicas extends StatefulWidget {
   const ListadoConsultasMedicas({super.key});
@@ -18,6 +21,20 @@ class _ListadoConsultasMedicasState extends State<ListadoConsultasMedicas> {
 
   @override
   Widget build(BuildContext context) {
+
+    bool esAdmin = context.read<AdminProvider>().esAdmin;
+
+    late int usuario;
+
+    if(esAdmin){
+      // Si es admin , recogemos el id del usuario seleccionado que esta siendo supervisado
+      usuario = context.read<IdUsuarioSeleccionado>().idUsuario;
+    } else {
+      // Si no es admin, recogemos el id del usuario logeado normal
+      usuario = context.read<IdSupervisor>().idUsuario;
+    }
+
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Consultas médicas'),
@@ -48,7 +65,8 @@ class _ListadoConsultasMedicasState extends State<ListadoConsultasMedicas> {
       body: Stack(
         children: [
           FutureBuilder<List<Map<String, dynamic>>>(
-            future: BaseDeDatos.consultarBD('Consulta'),
+            // Llamamos al método que nos devuelve las consultas médicas del usuario seleccionado
+            future: BaseDeDatos.consultarConsultasPorUsuario(usuario),
             builder: (BuildContext context,
                 AsyncSnapshot<List<Map<String, dynamic>>> snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {

@@ -9,6 +9,7 @@ class ConsultaMedica {
   late String _fecha;
   late String _hora;
   late String _motivo;
+  late int _idUsuario;
   
 
   ConsultaMedica(){
@@ -17,23 +18,26 @@ class ConsultaMedica {
     _fecha = "";
     _hora = "";
     _motivo = "";
+    _idUsuario = 0;
   }
 
-  ConsultaMedica.withData(String especialista, String doctor, String fecha, String hora, String motivo){
+  ConsultaMedica.withData(String especialista, String doctor, String fecha, String hora, String motivo, int idUsuario){
     _especialista = especialista;
     _doctor = doctor;
     _fecha = fecha;
     _hora = hora;
     _motivo = motivo;
+    _idUsuario = idUsuario;
   }
 
-  ConsultaMedica.withId(int id, String especialista, String doctor, String fecha, String hora, String motivo){
+  ConsultaMedica.withId(int id, String especialista, String doctor, String fecha, String hora, String motivo,  int idUsuario){
     _id = id;
     _especialista = especialista;
     _doctor = doctor;
     _fecha = fecha;
     _hora = hora;
     _motivo = motivo;
+    _idUsuario = idUsuario;
   }
 
   // Getters y setters
@@ -44,6 +48,7 @@ class ConsultaMedica {
   String get fecha => _fecha;
   String get hora => _hora;
   String get motivo => _motivo;
+  int get idUsuario => _idUsuario;
 
   set especialista(String especialista) {
     _especialista = especialista;
@@ -65,6 +70,10 @@ class ConsultaMedica {
     _motivo = motivo;
   }
 
+  set idUsuario(int idUsuario) {
+    _idUsuario = idUsuario;
+  }
+
   // Convertir un objeto de tipo ConsultaMedica a un objeto de tipo Map
   // Esto es útil cuando necesitas guardar un objeto ConsultaMedica en una base de datos o enviarlo a una API
 
@@ -78,6 +87,7 @@ class ConsultaMedica {
     map['fecha'] = _fecha;
     map['hora'] = _hora;
     map['motivo'] = _motivo;
+    map['idUsuario'] = _idUsuario;
     return map;
   }
 
@@ -91,6 +101,7 @@ class ConsultaMedica {
     _fecha = map['fecha'];
     _hora = map['hora'];
     _motivo = map['motivo'];
+    _idUsuario = map['idUsuario'];
   }
 
   Future<List<ConsultaMedica>> obtenerProximasConsultas(bool modoLocal) async {

@@ -92,6 +92,10 @@ class _ListadoUsuariosState extends State<ListadoUsuarios> {
                           final usuarioId = snapshot.data![index]['id'] as int;
                           Provider.of<IdUsuarioSeleccionado>(context, listen: false).setIdUsuario(usuarioId);
 
+                          final esAdmin=BaseDeDatos.obtenerRolAdministrador(usuarioId);
+
+                        
+
                           ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content: Text(

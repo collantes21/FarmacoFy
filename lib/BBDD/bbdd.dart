@@ -16,7 +16,7 @@ class BaseDeDatos {
   }
 
   // Método privado para inicializar la base de datos
-  static Future<Database> inicializarBD() async {
+ static Future<Database> inicializarBD() async {
   var directorio = await getDatabasesPath();
   String path = join(directorio, nombreBD);
   var baseDatos = await openDatabase(
@@ -134,6 +134,16 @@ class BaseDeDatos {
   return resultado;
 }
 
+// Consultar Consultas por usuario
+  static Future<List<Map<String, dynamic>>> consultarConsultasPorUsuario(int idUsuario) async {
+  final db = await database;
+  final resultado = await db!.rawQuery(
+    "SELECT * FROM Consulta WHERE idUsuario = ?",
+    [idUsuario],
+  
+  );
+  return resultado;
+}
   // Consulta para conocer el valor de la columna administrador
 
   static Future<bool?> obtenerRolUsuario(String usuario) async {
@@ -177,5 +187,21 @@ static Future<List<Map<String, dynamic>>> consultarUsuariosPorIdAdministrador(in
     whereArgs: [idAdministrador],
   );
   return resultado;
+}
+
+static Future<bool?> obtenerRolAdministrador(int idUsuario) async {
+  final db = await database;
+  final result = await db!.query(
+    'Usuarios',
+    columns: ['administrador'],
+    where: 'id = ?',
+    whereArgs: [idUsuario],
+  );
+  if (result.isNotEmpty) {
+    final bool esAdmin = result.first['administrador'] == 1;
+    return esAdmin;
+  } else {
+    return null;
+  }
 }
 }
